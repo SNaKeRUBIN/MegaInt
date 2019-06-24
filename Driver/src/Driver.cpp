@@ -1,4 +1,5 @@
 #include "MegaCalc.h"
+#include <cstdlib>
 
 
 /*

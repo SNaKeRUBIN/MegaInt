@@ -2,7 +2,7 @@
 #define MEGACALC_H
 
 #include "MegaInt.h"
-
+// #include <string>
 
 /*
 	The calculator thats uses class MegaInt to provide general arithmetic 

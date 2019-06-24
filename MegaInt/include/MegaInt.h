@@ -2,6 +2,7 @@
 #define MEGAINT_H
 
 #include <deque>
+#include <string>
 
 
 /*
