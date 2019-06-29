@@ -1,9 +1,6 @@
 #include "MegaCalc.h"
 #include <cstdlib>
 
-/*
-	The main function
-*/
 int main()
 {
 	MegaCalc mc;

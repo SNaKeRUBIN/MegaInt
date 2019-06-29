@@ -15,7 +15,7 @@ class MegaCalc
 	void run();
 
   private:
-	void parse(std::string, MegaInt &);
+	void parse(std::string input, MegaInt & accumulator);
 
 	void factorial(MegaInt &);
 
@@ -23,8 +23,8 @@ class MegaCalc
 
 	std::string delWhiteSpaces(std::string &str);
 
-	bool quit;
-	bool error;
+	bool m_quit;
+	bool m_error;
 };
 
 #endif // MEGACALC_H
