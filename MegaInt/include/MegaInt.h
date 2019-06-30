@@ -24,13 +24,13 @@ class MegaInt
 
 	explicit MegaInt(std::string const &num);
 
-	void clear();
+	void Clear();
 
-	void negate();
+	void Negate();
 
-	char getSign() const;
+	char GetSign() const;
 
-	std::deque<char> getMagnitude() const;
+	std::deque<char> GetMagnitude() const;
 
 	char &operator[](const int index);
 
@@ -77,45 +77,39 @@ class MegaInt
 	friend std::ostream &operator<<(std::ostream &out, const MegaInt &m);
 
   private:
-	void insert(std::string const &new_number);
+	void Insert(std::string const &new_number);
 
-	void normalize();
+	void Normalize();
 
-	// std::deque<char> normalize1(std::deque<char> A) const;
+	MegaInt Add(MegaInt B) const;
 
-	// int get_int(char const c) const;
+	// TODO
+	// why are deque based functions part of class def
+	std::deque<char> Plus(std::deque<char> A, std::deque<char> B) const;
 
-	// char get_char(int const i) const;
+	MegaInt Subtract(MegaInt B) const;
 
-	MegaInt add(MegaInt B) const;
+	std::deque<char> Minus(std::deque<char> A, std::deque<char> B) const;
 
-	std::deque<char> plus(std::deque<char> A, std::deque<char> B) const;
+	MegaInt Multiply(MegaInt B) const;
 
-	MegaInt subtract(MegaInt B) const;
+	std::deque<char> Product(std::deque<char> A, std::deque<char> B) const;
 
-	std::deque<char> minus(std::deque<char> A, std::deque<char> B) const;
+	std::deque<char> Product2(std::deque<char> A, std::deque<char> B) const;
 
-	MegaInt multiply(MegaInt B) const;
+	MegaInt Division(MegaInt B) const;
 
-	std::deque<char> product(std::deque<char> A, std::deque<char> B) const;
+	DivisionResult Quotient(std::deque<char> A, std::deque<char> B) const;
 
-	std::deque<char> product2(std::deque<char> A, std::deque<char> B) const;
+	DivisionResult Quotient2(std::deque<char> A, std::deque<char> B) const;
 
-	MegaInt division(MegaInt B) const;
+	MegaInt Modulus(MegaInt B) const;
 
-	// std::deque<std::deque<char>> quotient(std::deque<char> A, std::deque<char> B) const;
-	DivisionResult quotient(std::deque<char> A, std::deque<char> B) const;
+	bool GreaterThan(const std::deque<char> &A, const std::deque<char> &B) const;
 
-	// std::deque<std::deque<char>> quotient2(std::deque<char> A, std::deque<char> B) const;
-	DivisionResult quotient2(std::deque<char> A, std::deque<char> B) const;
+	bool LesserThan(const std::deque<char> &A, const std::deque<char> &B) const;
 
-	MegaInt modulus(MegaInt B) const;
-
-	bool greaterThan(const std::deque<char> &A, const std::deque<char> &B) const;
-
-	bool lesserThan(const std::deque<char> &A, const std::deque<char> &B) const;
-
-	bool equalTo(const std::deque<char> &A, const std::deque<char> &B) const;
+	bool EqualTo(const std::deque<char> &A, const std::deque<char> &B) const;
 
 	char m_sign;
 	std::deque<char> m_magnitude;

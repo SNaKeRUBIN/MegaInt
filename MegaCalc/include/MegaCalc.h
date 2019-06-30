@@ -12,16 +12,16 @@ class MegaCalc
   public:
 	MegaCalc();
 
-	void run();
+	void Run();
 
   private:
-	void parse(std::string &input, MegaInt &accumulator);
+	void Parse(std::string &input, MegaInt &accumulator);
 
-	void factorial(MegaInt &);
+	void Factorial(MegaInt &);
 
-	void hailstone(MegaInt &);
+	void Hailstone(MegaInt &);
 
-	std::string delWhiteSpaces(std::string &str);
+	std::string DelWhiteSpaces(std::string &str);
 
 	bool m_quit;
 	bool m_error;

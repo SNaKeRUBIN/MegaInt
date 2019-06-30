@@ -15,7 +15,7 @@ MegaCalc::MegaCalc()
 /*
 	Function to start the calculator
 */
-void MegaCalc::run()
+void MegaCalc::Run()
 {
 	std::string command_line;
 	MegaInt accumulator;
@@ -30,7 +30,7 @@ void MegaCalc::run()
 		std::cout << "Enter input: ";
 
 		std::getline(std::cin, command_line);
-		parse(command_line, accumulator);
+		Parse(command_line, accumulator);
 
 		if (m_error)
 		{
@@ -45,9 +45,9 @@ void MegaCalc::run()
 	@param input the input string (the function to be performed)
 	@param acc the accumulator value
 */
-void MegaCalc::parse(std::string &input, MegaInt &accumulator)
+void MegaCalc::Parse(std::string &input, MegaInt &accumulator)
 {
-	std::string const inputNoWhiteSpace = delWhiteSpaces(input);
+	std::string const inputNoWhiteSpace = DelWhiteSpaces(input);
 	m_error = false;
 
 	if (inputNoWhiteSpace.length() == 1)
@@ -56,16 +56,16 @@ void MegaCalc::parse(std::string &input, MegaInt &accumulator)
 		switch (command)
 		{
 		case 'c':
-			accumulator.clear();
+			accumulator.Clear();
 			break;
 		case 'n':
-			accumulator.negate();
+			accumulator.Negate();
 			break;
 		case 'f':
-			factorial(accumulator);
+			Factorial(accumulator);
 			break;
 		case 'h':
-			hailstone(accumulator);
+			Hailstone(accumulator);
 			break;
 		case 'q':
 			m_quit = true;
@@ -167,7 +167,7 @@ void MegaCalc::parse(std::string &input, MegaInt &accumulator)
 
 	@param num The number whose factorail has to be calculated
 */
-void MegaCalc::factorial(MegaInt &num)
+void MegaCalc::Factorial(MegaInt &num)
 {
 	{
 		MegaInt zero{"+0"};
@@ -197,7 +197,7 @@ void MegaCalc::factorial(MegaInt &num)
 
 	@param num the number from where hailstone sequence has to be calculated
 */
-void MegaCalc::hailstone(MegaInt &num)
+void MegaCalc::Hailstone(MegaInt &num)
 {
 	MegaInt zero{"+0"};
 
@@ -243,7 +243,7 @@ void MegaCalc::hailstone(MegaInt &num)
 
 	@return The string containing no white spaces
 */
-std::string MegaCalc::delWhiteSpaces(std::string &str) // source - https://stackoverflow.com/questions/83439/remove-spaces-from-stdstring-in-c
+std::string MegaCalc::DelWhiteSpaces(std::string &str) // source - https://stackoverflow.com/questions/83439/remove-spaces-from-stdstring-in-c
 {
 	str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
 	return str;

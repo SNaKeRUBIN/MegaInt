@@ -4,6 +4,6 @@
 int main()
 {
 	MegaCalc mc;
-	mc.run();
+	mc.Run();
 	return EXIT_SUCCESS;
 }

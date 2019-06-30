@@ -38,8 +38,8 @@ MegaInt::MegaInt(char const new_sign, std::deque<char> &new_magnitude)
 MegaInt::MegaInt(std::string const &num)
 {
 	MegaInt();
-	insert(num);
-	this->normalize();
+	Insert(num);
+	this->Normalize();
 }
 
 /*
@@ -47,7 +47,7 @@ MegaInt::MegaInt(std::string const &num)
 
 	@param new_number the number as a string to be added to a MegaInt number
 */
-void MegaInt::insert(std::string const &new_number)
+void MegaInt::Insert(std::string const &new_number)
 {
 	int start = 0;
 	m_magnitude.clear();
@@ -71,7 +71,7 @@ void MegaInt::insert(std::string const &new_number)
 /*
 	Resets the magnitude and sign of a MegaInt to zero and positive sign
 */
-void MegaInt::clear()
+void MegaInt::Clear()
 {
 	m_sign = '+';
 	m_magnitude.clear();
@@ -82,7 +82,7 @@ void MegaInt::clear()
 	Removes the leading zeroes from a MegaInt so that leftmost digit is a
 	non-zero digit
 */
-void MegaInt::normalize()
+void MegaInt::Normalize()
 {
 	if (m_magnitude.size() > 1)
 	{
@@ -139,7 +139,7 @@ static std::deque<char> normalizeDeque(std::deque<char> A)
 /*
 	Inverts the sign of a MegaInt
 */
-void MegaInt::negate()
+void MegaInt::Negate()
 {
 	if (m_sign == '+')
 	{
@@ -189,29 +189,29 @@ static char getCharFromInt(int const i)
 
 	@return The MegaInt that is the sum of the two numbers
 */
-MegaInt MegaInt::add(MegaInt B) const
+MegaInt MegaInt::Add(MegaInt B) const
 {
 	char sign_A = m_sign;
-	char sign_B = B.getSign();
+	char sign_B = B.GetSign();
 	char sign_C;
 
 	std::deque<char> mag_A = m_magnitude;
-	std::deque<char> mag_B = B.getMagnitude();
+	std::deque<char> mag_B = B.GetMagnitude();
 	std::deque<char> mag_C;
 
 	if (sign_A == sign_B)
 	{
 		sign_C = sign_A;
-		mag_C = plus(mag_A, mag_B);
+		mag_C = Plus(mag_A, mag_B);
 	}
 	else
 	{
-		if (greaterThan(mag_A, mag_B))
+		if (GreaterThan(mag_A, mag_B))
 		{
 			sign_C = sign_A;
-			mag_C = minus(mag_A, mag_B);
+			mag_C = Minus(mag_A, mag_B);
 		}
-		else if (lesserThan(mag_A, mag_B))
+		else if (LesserThan(mag_A, mag_B))
 		{
 			if (sign_A == '+')
 			{
@@ -221,7 +221,7 @@ MegaInt MegaInt::add(MegaInt B) const
 			{
 				sign_C = '+';
 			}
-			mag_C = minus(mag_B, mag_A);
+			mag_C = Minus(mag_B, mag_A);
 		}
 		else
 		{
@@ -231,7 +231,7 @@ MegaInt MegaInt::add(MegaInt B) const
 	}
 
 	MegaInt C{sign_C, mag_C};
-	C.normalize();
+	C.Normalize();
 	return C;
 }
 
@@ -243,7 +243,7 @@ MegaInt MegaInt::add(MegaInt B) const
 
 	@return a deque containing the sum if two numbers
 */
-std::deque<char> MegaInt::plus(std::deque<char> A, std::deque<char> B) const
+std::deque<char> MegaInt::Plus(std::deque<char> A, std::deque<char> B) const
 {
 	size_t const m = A.size();
 	size_t const n = B.size();
@@ -308,29 +308,29 @@ std::deque<char> MegaInt::plus(std::deque<char> A, std::deque<char> B) const
 
 	@return The result of subtraction of two MegaInts
 */
-MegaInt MegaInt::subtract(MegaInt B) const
+MegaInt MegaInt::Subtract(MegaInt B) const
 {
 	char sign_A = m_sign;
-	char sign_B = B.getSign();
+	char sign_B = B.GetSign();
 	char sign_C;
 
 	std::deque<char> mag_A = m_magnitude;
-	std::deque<char> mag_B = B.getMagnitude();
+	std::deque<char> mag_B = B.GetMagnitude();
 	std::deque<char> mag_C;
 
 	if (sign_A != sign_B)
 	{
 		sign_C = sign_A;
-		mag_C = plus(mag_A, mag_B);
+		mag_C = Plus(mag_A, mag_B);
 	}
 	else
 	{
-		if (greaterThan(mag_A, mag_B))
+		if (GreaterThan(mag_A, mag_B))
 		{
 			sign_C = sign_A;
-			mag_C = minus(mag_A, mag_B);
+			mag_C = Minus(mag_A, mag_B);
 		}
-		else if (lesserThan(mag_A, mag_B))
+		else if (LesserThan(mag_A, mag_B))
 		{
 			if (sign_A == '+')
 			{
@@ -341,7 +341,7 @@ MegaInt MegaInt::subtract(MegaInt B) const
 				sign_C = '+';
 			}
 
-			mag_C = minus(mag_B, mag_A);
+			mag_C = Minus(mag_B, mag_A);
 		}
 		else
 		{
@@ -351,7 +351,7 @@ MegaInt MegaInt::subtract(MegaInt B) const
 	}
 
 	MegaInt C{sign_C, mag_C};
-	C.normalize();
+	C.Normalize();
 	return C;
 }
 
@@ -363,7 +363,7 @@ MegaInt MegaInt::subtract(MegaInt B) const
 
 	@return the difference
 */
-std::deque<char> MegaInt::minus(std::deque<char> A, std::deque<char> B) const
+std::deque<char> MegaInt::Minus(std::deque<char> A, std::deque<char> B) const
 {
 	// A-B
 	size_t const m = A.size();
@@ -437,24 +437,24 @@ std::deque<char> MegaInt::minus(std::deque<char> A, std::deque<char> B) const
 
 	@return The product as a MegaInt
 */
-MegaInt MegaInt::multiply(MegaInt B) const
+MegaInt MegaInt::Multiply(MegaInt B) const
 {
 	// product(multiplier, multiplicand)
 	char const sign_A = m_sign;
-	char const sign_B = B.getSign();
+	char const sign_B = B.GetSign();
 	char sign_C;
 
 	std::deque<char> mag_A = m_magnitude;
-	std::deque<char> mag_B = B.getMagnitude();
+	std::deque<char> mag_B = B.GetMagnitude();
 	std::deque<char> mag_C;
 
-	if (greaterThan(mag_A, mag_B))
+	if (GreaterThan(mag_A, mag_B))
 	{
-		mag_C = product2(mag_B, mag_A);
+		mag_C = Product2(mag_B, mag_A);
 	}
 	else
 	{
-		mag_C = product2(mag_A, mag_B);
+		mag_C = Product2(mag_A, mag_B);
 	}
 
 	if (sign_A == sign_B)
@@ -467,7 +467,7 @@ MegaInt MegaInt::multiply(MegaInt B) const
 	}
 
 	MegaInt C{sign_C, mag_C};
-	C.normalize();
+	C.Normalize();
 	return C;
 }
 
@@ -480,7 +480,7 @@ MegaInt MegaInt::multiply(MegaInt B) const
 
 	@return The product as a deque
 */
-std::deque<char> MegaInt::product(std::deque<char> A, std::deque<char> B) const
+std::deque<char> MegaInt::Product(std::deque<char> A, std::deque<char> B) const
 {
 	// product1(multiplier, multiplicand)
 	std::deque<char> temp;
@@ -496,9 +496,9 @@ std::deque<char> MegaInt::product(std::deque<char> A, std::deque<char> B) const
 
 	while (A.size() > 1 || A[A.size() - 1] != '0')
 	{
-		temp = plus(temp, B);
+		temp = Plus(temp, B);
 
-		A = minus(A, temp2);
+		A = Minus(A, temp2);
 		A = normalizeDeque(A);
 	}
 
@@ -515,7 +515,7 @@ std::deque<char> MegaInt::product(std::deque<char> A, std::deque<char> B) const
 
 	@return The product as a deque
 */
-std::deque<char> MegaInt::product2(std::deque<char> A, std::deque<char> B) const
+std::deque<char> MegaInt::Product2(std::deque<char> A, std::deque<char> B) const
 {
 	// product2(multiplier, multiplicand)
 	std::deque<std::deque<char>> list;
@@ -531,7 +531,7 @@ std::deque<char> MegaInt::product2(std::deque<char> A, std::deque<char> B) const
 		temp.clear();
 		temp.push_front(c);
 
-		temp = product(temp, B);
+		temp = Product(temp, B);
 		temp = normalizeDeque(temp);
 
 		for (size_t j = count - i; j < count; j++)
@@ -546,7 +546,7 @@ std::deque<char> MegaInt::product2(std::deque<char> A, std::deque<char> B) const
 
 	for (size_t i = 1; i < list.size(); i++)
 	{
-		sum = plus(sum, list[i]);
+		sum = Plus(sum, list[i]);
 		sum = normalizeDeque(sum);
 	}
 
@@ -560,16 +560,16 @@ std::deque<char> MegaInt::product2(std::deque<char> A, std::deque<char> B) const
 
 	@return the quotient as a MegaInt number
 */
-MegaInt MegaInt::division(MegaInt B) const
+MegaInt MegaInt::Division(MegaInt B) const
 {
 	// quotient(dividend, divisor)
 	// quotient(A, B)
 	char const sign_A = m_sign;
-	char const sign_B = B.getSign();
+	char const sign_B = B.GetSign();
 	char sign_C;
 
 	std::deque<char> mag_A = m_magnitude;
-	std::deque<char> mag_B = B.getMagnitude();
+	std::deque<char> mag_B = B.GetMagnitude();
 	std::deque<char> mag_C;
 
 	if (sign_A == sign_B)
@@ -581,11 +581,11 @@ MegaInt MegaInt::division(MegaInt B) const
 		sign_C = '-';
 	}
 
-	DivisionResult result = quotient2(mag_A, mag_B);
+	DivisionResult result = Quotient2(mag_A, mag_B);
 	mag_C = result.quotient;
 
 	MegaInt C{sign_C, mag_C};
-	C.normalize();
+	C.Normalize();
 	return C;
 }
 
@@ -599,7 +599,7 @@ MegaInt MegaInt::division(MegaInt B) const
 
 	@return Divison result
 */
-DivisionResult MegaInt::quotient(std::deque<char> A, std::deque<char> B) const
+DivisionResult MegaInt::Quotient(std::deque<char> A, std::deque<char> B) const
 {
 	// quotient(dividend, divisor)
 	// subsequent subtraction till we get remainder < divisor
@@ -615,14 +615,14 @@ DivisionResult MegaInt::quotient(std::deque<char> A, std::deque<char> B) const
 	std::deque<char> increment;
 	increment.push_front('1');
 
-	while (!(lesserThan(dividend, divisor)))
+	while (!(LesserThan(dividend, divisor)))
 	{
-		dividend = minus(dividend, divisor);
+		dividend = Minus(dividend, divisor);
 		dividend = normalizeDeque(dividend);
 
 		remainder = dividend;
 
-		quotient = plus(quotient, increment);
+		quotient = Plus(quotient, increment);
 		quotient = normalizeDeque(quotient);
 	}
 
@@ -644,7 +644,7 @@ DivisionResult MegaInt::quotient(std::deque<char> A, std::deque<char> B) const
 
 	@return the quotient
 */
-DivisionResult MegaInt::quotient2(std::deque<char> A, std::deque<char> B) const
+DivisionResult MegaInt::Quotient2(std::deque<char> A, std::deque<char> B) const
 {
 	// quotient(dividend, divisor)
 	std::deque<char> current;
@@ -657,13 +657,13 @@ DivisionResult MegaInt::quotient2(std::deque<char> A, std::deque<char> B) const
 		current.push_back(A[i]);
 		current = normalizeDeque(current);
 
-		if (greaterThan(B, current))
+		if (GreaterThan(B, current))
 		{
 			quotient_.push_back('0');
 			continue;
 		}
 
-		result = quotient(current, B);
+		result = Quotient(current, B);
 
 		quotient_.push_back(result.quotient[0]);
 		quotient_ = normalizeDeque(quotient_);
@@ -683,16 +683,16 @@ DivisionResult MegaInt::quotient2(std::deque<char> A, std::deque<char> B) const
 
 	@return the remainder
 */
-MegaInt MegaInt::modulus(MegaInt B) const
+MegaInt MegaInt::Modulus(MegaInt B) const
 {
 	// quotient(dividend, divisor)
 	// quotient(A, B)
 	char const sign_A = m_sign;
-	char const sign_B = B.getSign();
+	char const sign_B = B.GetSign();
 	char sign_C;
 
 	std::deque<char> mag_A = m_magnitude;
-	std::deque<char> mag_B = B.getMagnitude();
+	std::deque<char> mag_B = B.GetMagnitude();
 	std::deque<char> mag_C;
 
 	if (sign_A == sign_B)
@@ -704,11 +704,11 @@ MegaInt MegaInt::modulus(MegaInt B) const
 		sign_C = '-';
 	}
 
-	DivisionResult result = quotient2(mag_A, mag_B);
+	DivisionResult result = Quotient2(mag_A, mag_B);
 	mag_C = result.remainder;
 
 	MegaInt C{sign_C, mag_C};
-	C.normalize();
+	C.Normalize();
 	return C;
 }
 
@@ -720,7 +720,7 @@ MegaInt MegaInt::modulus(MegaInt B) const
 
 	@return boolean value
 */
-bool MegaInt::greaterThan(const std::deque<char> &A, const std::deque<char> &B) const
+bool MegaInt::GreaterThan(const std::deque<char> &A, const std::deque<char> &B) const
 {
 	if (A.size() > B.size())
 	{
@@ -755,7 +755,7 @@ bool MegaInt::greaterThan(const std::deque<char> &A, const std::deque<char> &B) 
 
 	@return boolean value
 */
-bool MegaInt::lesserThan(const std::deque<char> &A, const std::deque<char> &B) const
+bool MegaInt::LesserThan(const std::deque<char> &A, const std::deque<char> &B) const
 {
 	if (A.size() < B.size())
 	{
@@ -790,7 +790,7 @@ bool MegaInt::lesserThan(const std::deque<char> &A, const std::deque<char> &B) c
 
 	@return boolean value
 */
-bool MegaInt::equalTo(const std::deque<char> &A, const std::deque<char> &B) const
+bool MegaInt::EqualTo(const std::deque<char> &A, const std::deque<char> &B) const
 {
 	if (A.size() == B.size())
 	{
@@ -958,7 +958,7 @@ char &MegaInt::operator[](const int index)
 
 	@return the sign
 */
-char MegaInt::getSign() const
+char MegaInt::GetSign() const
 {
 	return m_sign;
 }
@@ -968,7 +968,7 @@ char MegaInt::getSign() const
 
 	@return the magnitude
 */
-std::deque<char> MegaInt::getMagnitude() const
+std::deque<char> MegaInt::GetMagnitude() const
 {
 	return m_magnitude;
 }
@@ -984,7 +984,7 @@ std::deque<char> MegaInt::getMagnitude() const
 MegaInt operator+(const MegaInt &m, const MegaInt &n)
 {
 	MegaInt temp;
-	temp = m.add(n);
+	temp = m.Add(n);
 
 	return temp;
 }
@@ -1000,7 +1000,7 @@ MegaInt operator+(const MegaInt &m, const MegaInt &n)
 MegaInt operator-(const MegaInt &m, const MegaInt &n)
 {
 	MegaInt temp;
-	temp = m.subtract(n);
+	temp = m.Subtract(n);
 
 	return temp;
 }
@@ -1016,7 +1016,7 @@ MegaInt operator-(const MegaInt &m, const MegaInt &n)
 MegaInt operator*(const MegaInt &m, const MegaInt &n)
 {
 	MegaInt temp;
-	temp = m.multiply(n);
+	temp = m.Multiply(n);
 
 	return temp;
 }
@@ -1032,7 +1032,7 @@ MegaInt operator*(const MegaInt &m, const MegaInt &n)
 MegaInt operator/(const MegaInt &m, const MegaInt &n)
 {
 	MegaInt temp;
-	temp = m.division(n);
+	temp = m.Division(n);
 
 	return temp;
 }
@@ -1048,7 +1048,7 @@ MegaInt operator/(const MegaInt &m, const MegaInt &n)
 MegaInt operator%(const MegaInt &m, const MegaInt &n)
 {
 	MegaInt temp;
-	temp = m.modulus(n);
+	temp = m.Modulus(n);
 
 	return temp;
 }
@@ -1064,8 +1064,8 @@ MegaInt operator%(const MegaInt &m, const MegaInt &n)
 */
 std::ostream &operator<<(std::ostream &out, const MegaInt &m)
 {
-	const char copySign = m.getSign();
-	std::deque<char> copyMagnitude = m.getMagnitude();
+	const char copySign = m.GetSign();
+	std::deque<char> copyMagnitude = m.GetMagnitude();
 
 	out << copySign;
 
@@ -1088,21 +1088,21 @@ std::ostream &operator<<(std::ostream &out, const MegaInt &m)
 */
 bool operator>(const MegaInt &m, MegaInt &n)
 {
-	if (m.getSign() == '+' && n.getSign() == '+')
+	if (m.GetSign() == '+' && n.GetSign() == '+')
 	{
-		return m.greaterThan(m.getMagnitude(), n.getMagnitude());
+		return m.GreaterThan(m.GetMagnitude(), n.GetMagnitude());
 	}
-	else if (m.getSign() == '+' && n.getSign() == '-')
+	else if (m.GetSign() == '+' && n.GetSign() == '-')
 	{
 		return true;
 	}
-	else if (m.getSign() == '-' && n.getSign() == '+')
+	else if (m.GetSign() == '-' && n.GetSign() == '+')
 	{
 		return false;
 	}
-	else if (m.getSign() == '-' && n.getSign() == '-')
+	else if (m.GetSign() == '-' && n.GetSign() == '-')
 	{
-		return m.greaterThan(n.getMagnitude(), m.getMagnitude());
+		return m.GreaterThan(n.GetMagnitude(), m.GetMagnitude());
 	}
 	else
 	{
@@ -1121,21 +1121,21 @@ bool operator>(const MegaInt &m, MegaInt &n)
 */
 bool operator<(const MegaInt &m, MegaInt &n)
 {
-	if (m.getSign() == '+' && n.getSign() == '+')
+	if (m.GetSign() == '+' && n.GetSign() == '+')
 	{
-		return m.lesserThan(m.getMagnitude(), n.getMagnitude());
+		return m.LesserThan(m.GetMagnitude(), n.GetMagnitude());
 	}
-	else if (m.getSign() == '+' && n.getSign() == '-')
+	else if (m.GetSign() == '+' && n.GetSign() == '-')
 	{
 		return false;
 	}
-	else if (m.getSign() == '-' && n.getSign() == '+')
+	else if (m.GetSign() == '-' && n.GetSign() == '+')
 	{
 		return true;
 	}
-	else if (m.getSign() == '-' && n.getSign() == '-')
+	else if (m.GetSign() == '-' && n.GetSign() == '-')
 	{
-		return m.lesserThan(n.getMagnitude(), m.getMagnitude());
+		return m.LesserThan(n.GetMagnitude(), m.GetMagnitude());
 	}
 	else
 	{
@@ -1154,21 +1154,21 @@ bool operator<(const MegaInt &m, MegaInt &n)
 */
 bool operator==(const MegaInt &m, MegaInt &n)
 {
-	if (m.getSign() == '+' && n.getSign() == '+')
+	if (m.GetSign() == '+' && n.GetSign() == '+')
 	{
-		return m.equalTo(m.getMagnitude(), n.getMagnitude());
+		return m.EqualTo(m.GetMagnitude(), n.GetMagnitude());
 	}
-	else if (m.getSign() == '+' && n.getSign() == '-')
+	else if (m.GetSign() == '+' && n.GetSign() == '-')
 	{
 		return false;
 	}
-	else if (m.getSign() == '-' && n.getSign() == '+')
+	else if (m.GetSign() == '-' && n.GetSign() == '+')
 	{
 		return false;
 	}
-	else if (m.getSign() == '-' && n.getSign() == '-')
+	else if (m.GetSign() == '-' && n.GetSign() == '-')
 	{
-		return m.equalTo(m.getMagnitude(), n.getMagnitude());
+		return m.EqualTo(m.GetMagnitude(), n.GetMagnitude());
 	}
 	else
 	{
