@@ -4,6 +4,11 @@
 #include <deque>
 #include <string>
 
+namespace
+{
+struct DivisionResult;
+}
+
 /*
 	MegaInt is a class used to describe a data type that models arbitrary large integers.
 	Uses STL deque sequence container to store the digits of the numbers.
@@ -17,13 +22,15 @@ class MegaInt
 
 	MegaInt(char const new_sign, std::deque<char> new_magnitude);
 
-	// TODO
-	// Make this explicit
-	MegaInt(std::string const& num);
+	explicit MegaInt(std::string const &num);
 
 	void clear();
 
 	void negate();
+
+	char getSign() const;
+
+	std::deque<char> getMagnitude() const;
 
 	char &operator[](const int index);
 
@@ -70,15 +77,15 @@ class MegaInt
 	friend std::ostream &operator<<(std::ostream &out, const MegaInt &m);
 
   private:
-	void insert(std::string const& new_number);
+	void insert(std::string const &new_number);
 
 	void normalize();
 
-	std::deque<char> normalize1(std::deque<char> A) const;
+	// std::deque<char> normalize1(std::deque<char> A) const;
 
-	int get_int(char const c) const;
+	// int get_int(char const c) const;
 
-	char get_char(int const i) const;
+	// char get_char(int const i) const;
 
 	MegaInt add(MegaInt B) const;
 
@@ -96,9 +103,11 @@ class MegaInt
 
 	MegaInt division(MegaInt B) const;
 
-	std::deque<std::deque<char>> quotient(std::deque<char> A, std::deque<char> B) const;
+	// std::deque<std::deque<char>> quotient(std::deque<char> A, std::deque<char> B) const;
+	DivisionResult quotient(std::deque<char> A, std::deque<char> B) const;
 
-	std::deque<std::deque<char>> quotient2(std::deque<char> A, std::deque<char> B) const;
+	// std::deque<std::deque<char>> quotient2(std::deque<char> A, std::deque<char> B) const;
+	DivisionResult quotient2(std::deque<char> A, std::deque<char> B) const;
 
 	MegaInt modulus(MegaInt B) const;
 
@@ -107,12 +116,6 @@ class MegaInt
 	bool lesserThan(const std::deque<char> &A, const std::deque<char> &B) const;
 
 	bool equalTo(const std::deque<char> &A, const std::deque<char> &B) const;
-
-	// TODO
-	// whats the use of getter functions if they are not public ?
-	char getSign() const;
-
-	std::deque<char> getMagnitude() const;
 
 	char m_sign;
 	std::deque<char> m_magnitude;

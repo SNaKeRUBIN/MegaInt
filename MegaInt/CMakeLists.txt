@@ -1,4 +1,4 @@
-project(MegaInt)
+project(MegaInt LANGUAGES CXX)
 
 set(sources
     src/MegaInt.cpp

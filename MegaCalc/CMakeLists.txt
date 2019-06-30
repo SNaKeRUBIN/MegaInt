@@ -1,4 +1,4 @@
-project(MegaCalc)
+project(MegaCalc LANGUAGES CXX)
 
 set(sources
     src/MegaCalc.cpp
