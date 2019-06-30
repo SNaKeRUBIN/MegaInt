@@ -9,7 +9,7 @@
 */
 MegaCalc::MegaCalc()
 {
-	quit = false;
+	m_quit = false;
 }
 
 /*
@@ -18,7 +18,7 @@ MegaCalc::MegaCalc()
 void MegaCalc::run()
 {
 	std::string command_line;
-	MegaInt acc;
+	MegaInt accumulator;
 
 	std::cout << "Welcome to MegaCalculator" << std::endl;
 	std::cout << "-------------------------" << std::endl;
@@ -26,17 +26,17 @@ void MegaCalc::run()
 	do
 	{
 		std::cout << std::endl;
-		std::cout << "Accumulator: " << acc << std::endl;
+		std::cout << "Accumulator: " << accumulator << std::endl;
 		std::cout << "Enter input: ";
 
 		std::getline(std::cin, command_line);
-		parse(command_line, acc);
+		parse(command_line, accumulator);
 
-		if (error)
+		if (m_error)
 		{
 			std::cout << "Invalid Input" << std::endl;
 		}
-	} while (!quit);
+	} while (!m_quit);
 }
 
 /*
@@ -45,76 +45,71 @@ void MegaCalc::run()
 	@param input the input string (the function to be performed)
 	@param acc the accumulator value
 */
-void MegaCalc::parse(std::string input, MegaInt &acc)
+void MegaCalc::parse(std::string input, MegaInt &accumulator)
 {
-	error = false;
-	input = delWhiteSpaces(input);
+	std::string const inputNoWhiteSpace = delWhiteSpaces(input);
+	m_error = false;
 
-	if (input.length() == 1)
+	if (inputNoWhiteSpace.length() == 1)
 	{
-
-		char command = input[0];
-
+		char const command = inputNoWhiteSpace[0];
 		switch (command)
 		{
 		case 'c':
-			acc.clear();
+			accumulator.clear();
 			break;
-
 		case 'n':
-			acc.negate();
+			accumulator.negate();
 			break;
-
 		case 'f':
-			factorial(acc);
+			factorial(accumulator);
 			break;
-
 		case 'h':
-			hailstone(acc);
+			hailstone(accumulator);
 			break;
-
 		case 'q':
-			quit = true;
+			m_quit = true;
 			break;
-
 		default:
-			error = true;
+			m_error = true;
 		}
 	}
-	else if (input.length() > 1)
+	else if (inputNoWhiteSpace.length() > 1)
 	{
-		int start{0};
+		size_t start = 0;
 
-		const int size5 = 41;
-		char set5[size5] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '_', '!', '`', '~', '@', '#', '$', '^', '&', '(', ')', ',', '<', '.', '>'};
-		int temp;
+		size_t const size5 = 41;
+		char const set5[size5] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '_', '!', '`', '~', '@', '#', '$', '^', '&', '(', ')', ',', '<', '.', '>'};
+		size_t temp;
 
-		for (int i = 0; i < size5; i++)
+		// TODO
+		// this should be possible using iterators
+		for (char const tempChar : set5)
 		{
-			temp = input.find(set5[i]);
+			temp = inputNoWhiteSpace.find(tempChar);
 			if (temp != std::string::npos)
 			{
-				error = true;
+				m_error = true;
 				return;
 			}
 		}
 
-		if ((input[1] == '+') || (input[1] == '-'))
+		if ((inputNoWhiteSpace[1] == '+') || (inputNoWhiteSpace[1] == '-'))
 		{
 			start = 1;
 		}
 
-		std::string number = input.substr(1);
-		const int size1 = 2;
+		std::string const number = inputNoWhiteSpace.substr(1);
+		const size_t size1 = 2;
 		char set1[size1] = {'+', '-'};
-		for (int i = start; i < size1; i++)
+
+		for (char const tempChar : set1)
 		{
-			std::string tempString;
-			tempString = number.substr(start);
-			temp = tempString.find(set1[i]);
+			std::string const tempString = number.substr(start);
+			temp = tempString.find(tempChar);
 			if (temp != std::string::npos)
 			{
-				error = true;
+				m_error = true;
 				return;
 			}
 		}
@@ -122,46 +117,42 @@ void MegaCalc::parse(std::string input, MegaInt &acc)
 		MegaInt num{number};
 		MegaInt zero{"0"};
 
-		char command = input[0];
+		char const command = inputNoWhiteSpace[0];
 
 		switch (command)
 		{
 		case '=':
-			acc = num;
+			accumulator = num;
 			break;
-
 		case '+':
-			acc += num;
+			accumulator += num;
 			break;
-
 		case '-':
-			acc -= num;
+			accumulator -= num;
 			break;
-
 		case '*':
-			acc *= num;
+			accumulator *= num;
 			break;
-
 		case '/':
 			if (num == zero)
 			{
-				error = true;
+				m_error = true;
 				break;
 			}
-			acc /= num;
+			accumulator /= num;
 			break;
-
+		// TODO
+		// Verify if this needs chk for zero
 		case '%':
-			acc %= num;
+			accumulator %= num;
 			break;
-
 		default:
-			error = true;
+			m_error = true;
 		}
 	}
 	else
 	{
-		error = true;
+		m_error = true;
 	}
 }
 
@@ -181,7 +172,7 @@ void MegaCalc::factorial(MegaInt &num)
 		}
 		else if (num < zero)
 		{
-			error = true;
+			m_error = true;
 			return;
 		}
 	}
@@ -211,7 +202,7 @@ void MegaCalc::hailstone(MegaInt &num)
 	}
 	else if (num < zero)
 	{
-		error = true;
+		m_error = true;
 		return;
 	}
 
