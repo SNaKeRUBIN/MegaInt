@@ -90,7 +90,7 @@ void MegaCalc::Parse(std::string &input, MegaInt &accumulator)
 			}
 		}
 
-		auto const getStartValue = [&inputNoWhiteSpace] {
+		size_t const start = [&inputNoWhiteSpace] {
 			if ((inputNoWhiteSpace[1] == '+') || (inputNoWhiteSpace[1] == '-'))
 			{
 				return 1;
@@ -99,9 +99,8 @@ void MegaCalc::Parse(std::string &input, MegaInt &accumulator)
 			{
 				return 0;
 			}
-		};
-		size_t const start = getStartValue();
-
+		}();
+		
 		std::string const number = inputNoWhiteSpace.substr(1);
 		size_t const size1 = 2;
 		char const set1[size1] = {'+', '-'};
