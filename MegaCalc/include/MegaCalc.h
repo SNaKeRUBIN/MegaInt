@@ -15,7 +15,7 @@ class MegaCalc
 	void run();
 
   private:
-	void parse(std::string input, MegaInt & accumulator);
+	void parse(std::string input, MegaInt &accumulator);
 
 	void factorial(MegaInt &);
 

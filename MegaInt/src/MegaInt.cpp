@@ -1,6 +1,16 @@
 #include <iostream>
 #include "MegaInt.h"
 
+namespace
+{
+struct DivisionResult
+{
+	std::deque<char> quotient;
+	std::deque<char> remainder;
+};
+
+} // unnamed namespace
+
 MegaInt::MegaInt()
 {
 	m_sign = '+';
@@ -106,7 +116,7 @@ void MegaInt::normalize()
 
 	@return the normalized deque
 */
-std::deque<char> MegaInt::normalize1(std::deque<char> A) const
+static std::deque<char> normalizeDeque(std::deque<char> A)
 {
 	if (A.size() > 1)
 	{
@@ -148,11 +158,9 @@ void MegaInt::negate()
 
 	@return returns the int form of a character
 */
-int MegaInt::get_int(char const c) const
+static int getIntFromChar(char const c)
 {
 	char c0 = '0';
-	// TODO
-	// use static_cast
 	int const integerForm = c - static_cast<int>(c0);
 
 	return integerForm;
@@ -165,7 +173,7 @@ int MegaInt::get_int(char const c) const
 
 	@return returns the char form of an integer
 */
-char MegaInt::get_char(int const i) const
+static char getCharFromInt(int const i)
 {
 	char c0 = '0';
 	char const charForm = static_cast<char>(i + c0);
@@ -259,9 +267,9 @@ std::deque<char> MegaInt::plus(std::deque<char> A, std::deque<char> B) const
 	int temp = 0;
 	while (j >= 0 && k >= 0)
 	{
-		temp = get_int(A[j]) + get_int(B[k]) + carry;
+		temp = getIntFromChar(A[j]) + getIntFromChar(B[k]) + carry;
 
-		result.push_front(get_char(temp % 10));
+		result.push_front(getCharFromInt(temp % 10));
 		carry = temp / 10;
 		i--;
 		j--;
@@ -270,9 +278,9 @@ std::deque<char> MegaInt::plus(std::deque<char> A, std::deque<char> B) const
 
 	while (j >= 0)
 	{
-		temp = get_int(A[j]) + carry;
+		temp = getIntFromChar(A[j]) + carry;
 
-		result.push_front(get_char(temp % 10));
+		result.push_front(getCharFromInt(temp % 10));
 		carry = temp / 10;
 		i--;
 		j--;
@@ -280,15 +288,15 @@ std::deque<char> MegaInt::plus(std::deque<char> A, std::deque<char> B) const
 
 	while (k >= 0)
 	{
-		temp = get_int(B[k]) + carry;
+		temp = getIntFromChar(B[k]) + carry;
 
-		result.push_front(get_char(temp % 10));
+		result.push_front(getCharFromInt(temp % 10));
 		carry = temp / 10;
 		i--;
 		k--;
 	}
 
-	result.push_front(get_char(carry));
+	result.push_front(getCharFromInt(carry));
 	return result;
 }
 
@@ -380,7 +388,7 @@ std::deque<char> MegaInt::minus(std::deque<char> A, std::deque<char> B) const
 	int temp = 0;
 	while (j >= 0 && k >= 0)
 	{
-		temp = get_int(A[j]) - (get_int(B[k]) + borrow);
+		temp = getIntFromChar(A[j]) - (getIntFromChar(B[k]) + borrow);
 
 		borrow = 0;
 
@@ -389,7 +397,7 @@ std::deque<char> MegaInt::minus(std::deque<char> A, std::deque<char> B) const
 			borrow = 1;
 			temp = 10 + temp;
 		}
-		result.push_front(get_char(temp));
+		result.push_front(getCharFromInt(temp));
 
 		i--;
 		j--;
@@ -398,7 +406,7 @@ std::deque<char> MegaInt::minus(std::deque<char> A, std::deque<char> B) const
 
 	while (j >= 0)
 	{
-		temp = get_int(A[j]) - borrow;
+		temp = getIntFromChar(A[j]) - borrow;
 
 		borrow = 0;
 
@@ -408,7 +416,7 @@ std::deque<char> MegaInt::minus(std::deque<char> A, std::deque<char> B) const
 			temp = 10 + temp;
 		}
 
-		result.push_front(get_char(temp));
+		result.push_front(getCharFromInt(temp));
 		i--;
 		j--;
 	}
@@ -490,7 +498,7 @@ std::deque<char> MegaInt::product(std::deque<char> A, std::deque<char> B) const
 		temp = plus(temp, B);
 
 		A = minus(A, temp2);
-		A = normalize1(A);
+		A = normalizeDeque(A);
 	}
 
 	return temp;
@@ -523,7 +531,7 @@ std::deque<char> MegaInt::product2(std::deque<char> A, std::deque<char> B) const
 		temp.push_front(c);
 
 		temp = product(temp, B);
-		temp = normalize1(temp);
+		temp = normalizeDeque(temp);
 
 		for (size_t j = count - i; j < count; j++)
 		{
@@ -538,7 +546,7 @@ std::deque<char> MegaInt::product2(std::deque<char> A, std::deque<char> B) const
 	for (size_t i = 1; i < list.size(); i++)
 	{
 		sum = plus(sum, list[i]);
-		sum = normalize1(sum);
+		sum = normalizeDeque(sum);
 	}
 
 	return sum;
@@ -563,7 +571,7 @@ MegaInt MegaInt::division(MegaInt B) const
 	std::deque<char> mag_B = B.getMagnitude();
 	std::deque<char> mag_C;
 
-	std::deque<std::deque<char>> list;
+	// std::deque<std::deque<char>> list;
 
 	if (sign_A == sign_B)
 	{
@@ -574,8 +582,9 @@ MegaInt MegaInt::division(MegaInt B) const
 		sign_C = '-';
 	}
 
-	list = quotient2(mag_A, mag_B);
-	mag_C = list[0]; // list[0] = quotient, list[1] = remainder
+	DivisionResult result = quotient2(mag_A, mag_B);
+	// mag_C = list[0]; // list[0] = quotient, list[1] = remainder
+	mag_C = result.quotient;
 
 	MegaInt C{sign_C, mag_C};
 	C.normalize();
@@ -590,9 +599,9 @@ MegaInt MegaInt::division(MegaInt B) const
 	@param A the dividend
 	@param B the divisor
 
-	@return the quotient
+	@return Divison result
 */
-std::deque<std::deque<char>> MegaInt::quotient(std::deque<char> A, std::deque<char> B) const
+DivisionResult MegaInt::quotient(std::deque<char> A, std::deque<char> B) const
 {
 	// quotient(dividend, divisor)
 	// subsequent subtraction till we get remainder < divisor
@@ -608,26 +617,22 @@ std::deque<std::deque<char>> MegaInt::quotient(std::deque<char> A, std::deque<ch
 	std::deque<char> increment;
 	increment.push_front('1');
 
-	std::deque<std::deque<char>> list;
-
 	while (!(lesserThan(dividend, divisor)))
 	{
 		dividend = minus(dividend, divisor);
-		dividend = normalize1(dividend);
+		dividend = normalizeDeque(dividend);
 
 		remainder = dividend;
 
 		quotient = plus(quotient, increment);
-		quotient = normalize1(quotient);
+		quotient = normalizeDeque(quotient);
 	}
 
-	list.push_front(quotient);
-	list.push_back(remainder);
-	// list[0] = quotient, list[1] = remainder
-
-	// TODO
-	// Return a tuple/struct rather than list
-	return list;
+	DivisionResult result;
+	result.quotient = quotient;
+	result.remainder = remainder;
+	
+	return result;
 }
 
 /*
@@ -641,18 +646,18 @@ std::deque<std::deque<char>> MegaInt::quotient(std::deque<char> A, std::deque<ch
 
 	@return the quotient
 */
-std::deque<std::deque<char>> MegaInt::quotient2(std::deque<char> A, std::deque<char> B) const
+DivisionResult MegaInt::quotient2(std::deque<char> A, std::deque<char> B) const
 {
 	// quotient(dividend, divisor)
 	std::deque<char> current;
 	std::deque<char> quotient_;
 	std::deque<char> temp;
-	std::deque<std::deque<char>> list;
+	DivisionResult result;
 
 	for (size_t i = 0; i < A.size(); i++)
 	{
 		current.push_back(A[i]);
-		current = normalize1(current);
+		current = normalizeDeque(current);
 
 		if (greaterThan(B, current))
 		{
@@ -660,21 +665,17 @@ std::deque<std::deque<char>> MegaInt::quotient2(std::deque<char> A, std::deque<c
 			continue;
 		}
 
-		list = quotient(current, B);
+		result = quotient(current, B);
 
-		quotient_.push_back(list[0][0]);
-		quotient_ = normalize1(quotient_);
-		current = list[1];
-		current = normalize1(current);
+		quotient_.push_back(result.quotient[0]);
+		quotient_ = normalizeDeque(quotient_);
+		current = normalizeDeque(result.remainder);
 	}
 
-	list.clear();
-	list.push_back(quotient_);
-	list.push_back(current);
+	result.quotient = quotient_;
+	result.remainder = current;
 
-	// TODO
-	// Return a tuple/struct
-	return list;
+	return result;
 }
 
 /*
@@ -696,7 +697,7 @@ MegaInt MegaInt::modulus(MegaInt B) const
 	std::deque<char> mag_B = B.getMagnitude();
 	std::deque<char> mag_C;
 
-	std::deque<std::deque<char>> list;
+	// std::deque<std::deque<char>> list;
 
 	if (sign_A == sign_B)
 	{
@@ -707,8 +708,11 @@ MegaInt MegaInt::modulus(MegaInt B) const
 		sign_C = '-';
 	}
 
-	list = quotient2(mag_A, mag_B);
-	mag_C = list[1]; // list[0] = quotient, list[1] = remainder
+	// list = quotient2(mag_A, mag_B);
+	// mag_C = list[1]; // list[0] = quotient, list[1] = remainder
+
+	DivisionResult result = quotient2(mag_A, mag_B);
+	mag_C = result.remainder;
 
 	MegaInt C{sign_C, mag_C};
 	C.normalize();
@@ -943,15 +947,13 @@ MegaInt &MegaInt::operator--(int)
 char &MegaInt::operator[](const int index)
 {
 	// chk if index is in right range
-	if (index >=0 && static_cast<size_t>(index) < m_magnitude.size())
+	if (index >= 0 && static_cast<size_t>(index) < m_magnitude.size())
 	{
 		return m_magnitude[index];
 	}
 	else
 	{
 		char temp{'0'};
-		// TODO
-		// Implement some form of logging or atleast output to stderr
 		std::cout << "out of bound index entered" << std::endl;
 
 		return temp;

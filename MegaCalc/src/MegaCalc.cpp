@@ -82,8 +82,6 @@ void MegaCalc::parse(std::string input, MegaInt &accumulator)
 		char const set5[size5] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '_', '!', '`', '~', '@', '#', '$', '^', '&', '(', ')', ',', '<', '.', '>'};
 		size_t temp;
 
-		// TODO
-		// this should be possible using iterators
 		for (char const tempChar : set5)
 		{
 			temp = inputNoWhiteSpace.find(tempChar);
@@ -141,9 +139,12 @@ void MegaCalc::parse(std::string input, MegaInt &accumulator)
 			}
 			accumulator /= num;
 			break;
-		// TODO
-		// Verify if this needs chk for zero
 		case '%':
+			if (num == zero)
+			{
+				m_error = true;
+				break;
+			}
 			accumulator %= num;
 			break;
 		default:
