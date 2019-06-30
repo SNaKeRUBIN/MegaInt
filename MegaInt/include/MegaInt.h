@@ -15,9 +15,11 @@ class MegaInt
   public:
 	MegaInt();
 
-	MegaInt(char new_sign, std::deque<char> new_magnitude);
+	MegaInt(char const new_sign, std::deque<char> new_magnitude);
 
-	MegaInt(std::string);
+	// TODO
+	// Make this explicit
+	MegaInt(std::string const& num);
 
 	void clear();
 
@@ -68,15 +70,15 @@ class MegaInt
 	friend std::ostream &operator<<(std::ostream &out, const MegaInt &m);
 
   private:
-	void insert(std::string new_number);
+	void insert(std::string const& new_number);
 
 	void normalize();
 
 	std::deque<char> normalize1(std::deque<char> A) const;
 
-	int get_int(char c) const;
+	int get_int(char const c) const;
 
-	char get_char(int i) const;
+	char get_char(int const i) const;
 
 	MegaInt add(MegaInt B) const;
 
@@ -106,12 +108,14 @@ class MegaInt
 
 	bool equalTo(const std::deque<char> &A, const std::deque<char> &B) const;
 
+	// TODO
+	// whats the use of getter functions if they are not public ?
 	char getSign() const;
 
 	std::deque<char> getMagnitude() const;
 
-	char sign;
-	std::deque<char> magnitude;
+	char m_sign;
+	std::deque<char> m_magnitude;
 };
 
 #endif // MEGAINT_H
