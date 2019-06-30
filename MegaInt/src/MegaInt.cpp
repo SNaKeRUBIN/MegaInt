@@ -416,7 +416,7 @@ MegaInt &MegaInt::operator++()
 
 	@return the sum of the MegaInt with one
 */
-MegaInt &MegaInt::operator++(int)
+MegaInt MegaInt::operator++(int)
 {
 	// postfix
 	MegaInt temp;
@@ -443,7 +443,7 @@ MegaInt &MegaInt::operator--()
 
 	@return the difference of the MegaInt with one
 */
-MegaInt &MegaInt::operator--(int)
+MegaInt MegaInt::operator--(int)
 {
 	// postfix
 	MegaInt temp;
@@ -459,7 +459,7 @@ MegaInt &MegaInt::operator--(int)
 
 	@return the digit at given index as a char
 */
-char &MegaInt::operator[](const int index)
+char MegaInt::operator[](const int index)
 {
 	// chk if index is in right range
 	if (index >= 0 && static_cast<size_t>(index) < m_magnitude.size())

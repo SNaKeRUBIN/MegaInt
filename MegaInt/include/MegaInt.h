@@ -27,7 +27,7 @@ public:
 
 	std::deque<char> GetMagnitude() const;
 
-	char &operator[](const int index);
+	char operator[](const int index);
 
 	MegaInt &operator+=(const MegaInt &n);
 
@@ -41,11 +41,11 @@ public:
 
 	MegaInt &operator++();
 
-	MegaInt &operator++(int);
+	MegaInt operator++(int);
 
 	MegaInt &operator--();
 
-	MegaInt &operator--(int);
+	MegaInt operator--(int);
 
 	friend MegaInt operator+(const MegaInt &m, const MegaInt &n);
 

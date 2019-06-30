@@ -15,7 +15,7 @@ struct DivisionResult
 
 	@return returns the int form of a character
 */
-int getIntFromChar(char const c)
+int GetIntFromChar(char const c)
 {
     char const c0 = '0';
     return static_cast<int>(c - c0);
@@ -28,7 +28,7 @@ int getIntFromChar(char const c)
 
 	@return returns the char form of an integer
 */
-char getCharFromInt(int const i)
+char GetCharFromInt(int const i)
 {
     assert(i >= 0 && i < 10);
     char c0 = '0';
@@ -43,7 +43,7 @@ char getCharFromInt(int const i)
 
 	@return the normalized deque
 */
-static std::deque<char> normalizeDeque(std::deque<char> A)
+static std::deque<char> NormalizeDeque(std::deque<char> A)
 {
     if (A.size() > 1)
     {
@@ -189,9 +189,9 @@ std::deque<char> Plus(std::deque<char> A, std::deque<char> B)
     int temp = 0;
     while (j >= 0 && k >= 0)
     {
-        temp = getIntFromChar(A[j]) + getIntFromChar(B[k]) + carry;
+        temp = GetIntFromChar(A[j]) + GetIntFromChar(B[k]) + carry;
 
-        result.push_front(getCharFromInt(temp % 10));
+        result.push_front(GetCharFromInt(temp % 10));
         carry = temp / 10;
         i--;
         j--;
@@ -200,9 +200,9 @@ std::deque<char> Plus(std::deque<char> A, std::deque<char> B)
 
     while (j >= 0)
     {
-        temp = getIntFromChar(A[j]) + carry;
+        temp = GetIntFromChar(A[j]) + carry;
 
-        result.push_front(getCharFromInt(temp % 10));
+        result.push_front(GetCharFromInt(temp % 10));
         carry = temp / 10;
         i--;
         j--;
@@ -210,15 +210,15 @@ std::deque<char> Plus(std::deque<char> A, std::deque<char> B)
 
     while (k >= 0)
     {
-        temp = getIntFromChar(B[k]) + carry;
+        temp = GetIntFromChar(B[k]) + carry;
 
-        result.push_front(getCharFromInt(temp % 10));
+        result.push_front(GetCharFromInt(temp % 10));
         carry = temp / 10;
         i--;
         k--;
     }
 
-    result.push_front(getCharFromInt(carry));
+    result.push_front(GetCharFromInt(carry));
     return result;
 }
 
@@ -256,7 +256,7 @@ std::deque<char> Minus(std::deque<char> A, std::deque<char> B)
     int temp = 0;
     while (j >= 0 && k >= 0)
     {
-        temp = getIntFromChar(A[j]) - (getIntFromChar(B[k]) + borrow);
+        temp = GetIntFromChar(A[j]) - (GetIntFromChar(B[k]) + borrow);
 
         borrow = 0;
 
@@ -265,7 +265,7 @@ std::deque<char> Minus(std::deque<char> A, std::deque<char> B)
             borrow = 1;
             temp = 10 + temp;
         }
-        result.push_front(getCharFromInt(temp));
+        result.push_front(GetCharFromInt(temp));
 
         i--;
         j--;
@@ -274,7 +274,7 @@ std::deque<char> Minus(std::deque<char> A, std::deque<char> B)
 
     while (j >= 0)
     {
-        temp = getIntFromChar(A[j]) - borrow;
+        temp = GetIntFromChar(A[j]) - borrow;
 
         borrow = 0;
 
@@ -284,7 +284,7 @@ std::deque<char> Minus(std::deque<char> A, std::deque<char> B)
             temp = 10 + temp;
         }
 
-        result.push_front(getCharFromInt(temp));
+        result.push_front(GetCharFromInt(temp));
         i--;
         j--;
     }
@@ -325,7 +325,7 @@ std::deque<char> Product(std::deque<char> A, std::deque<char> B)
         temp = Plus(temp, B);
 
         A = Minus(A, temp2);
-        A = normalizeDeque(A);
+        A = NormalizeDeque(A);
     }
 
     return temp;
@@ -358,7 +358,7 @@ std::deque<char> Product2(std::deque<char> A, std::deque<char> B)
         temp.push_front(c);
 
         temp = Product(temp, B);
-        temp = normalizeDeque(temp);
+        temp = NormalizeDeque(temp);
 
         for (size_t j = count - i; j < count; j++)
         {
@@ -373,7 +373,7 @@ std::deque<char> Product2(std::deque<char> A, std::deque<char> B)
     for (size_t i = 1; i < list.size(); i++)
     {
         sum = Plus(sum, list[i]);
-        sum = normalizeDeque(sum);
+        sum = NormalizeDeque(sum);
     }
 
     return sum;
@@ -408,12 +408,12 @@ DivisionResult Quotient(std::deque<char> A, std::deque<char> B)
     while (!(LesserThan(dividend, divisor)))
     {
         dividend = Minus(dividend, divisor);
-        dividend = normalizeDeque(dividend);
+        dividend = NormalizeDeque(dividend);
 
         remainder = dividend;
 
         quotient = Plus(quotient, increment);
-        quotient = normalizeDeque(quotient);
+        quotient = NormalizeDeque(quotient);
     }
 
     DivisionResult result;
@@ -445,7 +445,7 @@ DivisionResult Quotient2(std::deque<char> A, std::deque<char> B)
     for (size_t i = 0; i < A.size(); i++)
     {
         current.push_back(A[i]);
-        current = normalizeDeque(current);
+        current = NormalizeDeque(current);
 
         if (GreaterThan(B, current))
         {
@@ -456,8 +456,8 @@ DivisionResult Quotient2(std::deque<char> A, std::deque<char> B)
         result = Quotient(current, B);
 
         quotient_.push_back(result.quotient[0]);
-        quotient_ = normalizeDeque(quotient_);
-        current = normalizeDeque(result.remainder);
+        quotient_ = NormalizeDeque(quotient_);
+        current = NormalizeDeque(result.remainder);
     }
 
     result.quotient = quotient_;
