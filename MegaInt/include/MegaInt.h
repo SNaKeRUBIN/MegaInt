@@ -20,7 +20,7 @@ class MegaInt
   public:
 	MegaInt();
 
-	MegaInt(char const new_sign, std::deque<char> new_magnitude);
+	MegaInt(char const new_sign, std::deque<char> &new_magnitude);
 
 	explicit MegaInt(std::string const &num);
 

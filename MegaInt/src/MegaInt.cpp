@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 #include "MegaInt.h"
 
 namespace
@@ -23,7 +24,7 @@ MegaInt::MegaInt()
 	@param new_sign the sign of the integer
 	@param new_magnitude the magnitude of the integer
 */
-MegaInt::MegaInt(char const new_sign, std::deque<char> new_magnitude)
+MegaInt::MegaInt(char const new_sign, std::deque<char> &new_magnitude)
 {
 	m_sign = new_sign;
 	m_magnitude = new_magnitude;
@@ -74,7 +75,6 @@ void MegaInt::clear()
 {
 	m_sign = '+';
 	m_magnitude.clear();
-
 	m_magnitude.push_back('0');
 }
 
@@ -175,6 +175,7 @@ static int getIntFromChar(char const c)
 */
 static char getCharFromInt(int const i)
 {
+	assert(i >= 0 && i < 10);
 	char c0 = '0';
 	char const charForm = static_cast<char>(i + c0);
 

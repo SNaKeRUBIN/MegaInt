@@ -45,7 +45,7 @@ void MegaCalc::run()
 	@param input the input string (the function to be performed)
 	@param acc the accumulator value
 */
-void MegaCalc::parse(std::string input, MegaInt &accumulator)
+void MegaCalc::parse(std::string &input, MegaInt &accumulator)
 {
 	std::string const inputNoWhiteSpace = delWhiteSpaces(input);
 	m_error = false;
@@ -76,8 +76,6 @@ void MegaCalc::parse(std::string input, MegaInt &accumulator)
 	}
 	else if (inputNoWhiteSpace.length() > 1)
 	{
-		size_t start = 0;
-
 		size_t const size5 = 41;
 		char const set5[size5] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '_', '!', '`', '~', '@', '#', '$', '^', '&', '(', ')', ',', '<', '.', '>'};
 		size_t temp;
@@ -92,14 +90,21 @@ void MegaCalc::parse(std::string input, MegaInt &accumulator)
 			}
 		}
 
-		if ((inputNoWhiteSpace[1] == '+') || (inputNoWhiteSpace[1] == '-'))
-		{
-			start = 1;
-		}
+		auto const getStartValue = [&inputNoWhiteSpace] {
+			if ((inputNoWhiteSpace[1] == '+') || (inputNoWhiteSpace[1] == '-'))
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		};
+		size_t const start = getStartValue();
 
 		std::string const number = inputNoWhiteSpace.substr(1);
-		const size_t size1 = 2;
-		char set1[size1] = {'+', '-'};
+		size_t const size1 = 2;
+		char const set1[size1] = {'+', '-'};
 
 		for (char const tempChar : set1)
 		{
