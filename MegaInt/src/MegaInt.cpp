@@ -571,8 +571,6 @@ MegaInt MegaInt::division(MegaInt B) const
 	std::deque<char> mag_B = B.getMagnitude();
 	std::deque<char> mag_C;
 
-	// std::deque<std::deque<char>> list;
-
 	if (sign_A == sign_B)
 	{
 		sign_C = '+';
@@ -583,7 +581,6 @@ MegaInt MegaInt::division(MegaInt B) const
 	}
 
 	DivisionResult result = quotient2(mag_A, mag_B);
-	// mag_C = list[0]; // list[0] = quotient, list[1] = remainder
 	mag_C = result.quotient;
 
 	MegaInt C{sign_C, mag_C};
@@ -631,7 +628,7 @@ DivisionResult MegaInt::quotient(std::deque<char> A, std::deque<char> B) const
 	DivisionResult result;
 	result.quotient = quotient;
 	result.remainder = remainder;
-	
+
 	return result;
 }
 
@@ -697,8 +694,6 @@ MegaInt MegaInt::modulus(MegaInt B) const
 	std::deque<char> mag_B = B.getMagnitude();
 	std::deque<char> mag_C;
 
-	// std::deque<std::deque<char>> list;
-
 	if (sign_A == sign_B)
 	{
 		sign_C = '+';
@@ -707,9 +702,6 @@ MegaInt MegaInt::modulus(MegaInt B) const
 	{
 		sign_C = '-';
 	}
-
-	// list = quotient2(mag_A, mag_B);
-	// mag_C = list[1]; // list[0] = quotient, list[1] = remainder
 
 	DivisionResult result = quotient2(mag_A, mag_B);
 	mag_C = result.remainder;
