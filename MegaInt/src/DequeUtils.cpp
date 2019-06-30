@@ -17,10 +17,8 @@ struct DivisionResult
 */
 int getIntFromChar(char const c)
 {
-    char c0 = '0';
-    int const integerForm = c - static_cast<int>(c0);
-
-    return integerForm;
+    char const c0 = '0';
+    return static_cast<int>(c - c0);
 }
 
 /*
@@ -34,9 +32,7 @@ char getCharFromInt(int const i)
 {
     assert(i >= 0 && i < 10);
     char c0 = '0';
-    char const charForm = static_cast<char>(i + c0);
-
-    return charForm;
+    return static_cast<char>(i + c0);
 }
 
 /*
@@ -146,22 +142,17 @@ bool LesserThan(const std::deque<char> &A, const std::deque<char> &B)
 */
 bool EqualTo(const std::deque<char> &A, const std::deque<char> &B)
 {
-    if (A.size() == B.size())
-    {
-
-        for (size_t i = 0; i < A.size(); i++)
-        {
-            if (A[i] != B[i])
-            {
-                return false;
-            }
-        }
-    }
-    else
+    if (A.size() != B.size())
     {
         return false;
     }
-
+    for (size_t i = 0; i < A.size(); i++)
+    {
+        if (A[i] != B[i])
+        {
+            return false;
+        }
+    }
     return true;
 }
 
