@@ -57,17 +57,17 @@ public:
 
 	friend MegaInt operator%(const MegaInt &m, const MegaInt &n);
 
-	friend bool operator>(const MegaInt &m, MegaInt &n);
+	friend bool operator>(const MegaInt &m, const MegaInt &n);
 
-	friend bool operator<(const MegaInt &m, MegaInt &n);
+	friend bool operator<(const MegaInt &m, const MegaInt &n);
 
-	friend bool operator==(const MegaInt &m, MegaInt &n);
+	friend bool operator==(const MegaInt &m, const MegaInt &n);
 
-	friend bool operator<=(const MegaInt &m, MegaInt &n);
+	friend bool operator<=(const MegaInt &m, const MegaInt &n);
 
-	friend bool operator>=(const MegaInt &m, MegaInt &n);
+	friend bool operator>=(const MegaInt &m, const MegaInt &n);
 
-	friend bool operator!=(const MegaInt &m, MegaInt &n);
+	friend bool operator!=(const MegaInt &m, const MegaInt &n);
 
 	friend std::ostream &operator<<(std::ostream &out, const MegaInt &m);
 

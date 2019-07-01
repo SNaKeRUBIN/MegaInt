@@ -608,7 +608,7 @@ std::ostream &operator<<(std::ostream &out, const MegaInt &m)
 
 	@return boolean value
 */
-bool operator>(const MegaInt &m, MegaInt &n)
+bool operator>(const MegaInt &m, const MegaInt &n)
 {
 	if (m.GetSign() == '+' && n.GetSign() == '+')
 	{
@@ -641,7 +641,7 @@ bool operator>(const MegaInt &m, MegaInt &n)
 
 	@return boolean value
 */
-bool operator<(const MegaInt &m, MegaInt &n)
+bool operator<(const MegaInt &m, const MegaInt &n)
 {
 	if (m.GetSign() == '+' && n.GetSign() == '+')
 	{
@@ -674,7 +674,7 @@ bool operator<(const MegaInt &m, MegaInt &n)
 
 	@return boolean value
 */
-bool operator==(const MegaInt &m, MegaInt &n)
+bool operator==(const MegaInt &m, const MegaInt &n)
 {
 	if (m.GetSign() == '+' && n.GetSign() == '+')
 	{
@@ -707,7 +707,7 @@ bool operator==(const MegaInt &m, MegaInt &n)
 
 	@return boolean value
 */
-bool operator<=(const MegaInt &m, MegaInt &n)
+bool operator<=(const MegaInt &m, const MegaInt &n)
 {
 	return !(m > n);
 }
@@ -721,7 +721,7 @@ bool operator<=(const MegaInt &m, MegaInt &n)
 
 	@return boolean value
 */
-bool operator>=(const MegaInt &m, MegaInt &n)
+bool operator>=(const MegaInt &m, const MegaInt &n)
 {
 	return !(m < n);
 }
@@ -735,7 +735,7 @@ bool operator>=(const MegaInt &m, MegaInt &n)
 
 	@return boolean value
 */
-bool operator!=(const MegaInt &m, MegaInt &n)
+bool operator!=(const MegaInt &m, const MegaInt &n)
 {
 	return !(m == n);
 }
