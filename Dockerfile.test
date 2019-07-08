@@ -1,0 +1,35 @@
+FROM ubuntu:16.04
+
+RUN apt update && \
+    apt install -y \
+        software-properties-common \
+        wget \
+        g++ \
+        make && \
+    rm -rf /var/lib/apt/lists/*
+
+# install latest cmake
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.13.3/cmake-3.13.3-Linux-x86_64.sh && \
+    mkdir /opt/cmake && \
+    sh cmake-3.13.3-Linux-x86_64.sh --prefix=/opt/cmake --skip-license && \
+    ln -s -f /opt/cmake/bin/cmake /usr/local/bin/cmake && \
+    ln -s -f /opt/cmake/bin/ctest /usr/local/bin/ctest
+
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test && \
+    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - &&  \
+    echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-7 main" | tee /etc/apt/sources.list.d/clang7.list && \
+    apt update && \
+    apt install -y clang-7 && \
+    rm -rf /var/lib/apt/lists/*
+ENV CC=clang-7
+ENV CXX=clang++-7
+
+COPY . MegaInt/
+
+ARG TEST_FLAG
+RUN cd MegaInt && \
+    ./build.sh $TEST_FLAG
+
+CMD cd MegaInt/build && \
+    ctest
+
