@@ -291,7 +291,7 @@ std::deque<char> Minus(std::deque<char> A, std::deque<char> B)
 
     if (borrow == 1 || k >= 0)
     {
-        std::cout << " X cannot be less than Y in (X-Y)" << std::endl;
+        std::cout << " X cannot be less than Y in (X-Y)\n";
     }
 
     return result;

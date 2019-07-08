@@ -1,1 +1,1 @@
-enable address sanitizer in docker tests
+docker should only be used to perform tests and not to copy artifacts to main folder

@@ -4,8 +4,8 @@
 
 MegaInt::MegaInt()
 {
-	m_sign = '+';
-	m_magnitude.push_back('0');
+    m_sign = '+';
+    m_magnitude.push_back('0');
 }
 
 /*
@@ -16,8 +16,8 @@ MegaInt::MegaInt()
 */
 MegaInt::MegaInt(char const new_sign, std::deque<char> &new_magnitude)
 {
-	m_sign = new_sign;
-	m_magnitude = new_magnitude;
+    m_sign = new_sign;
+    m_magnitude = new_magnitude;
 }
 
 /*
@@ -27,9 +27,9 @@ MegaInt::MegaInt(char const new_sign, std::deque<char> &new_magnitude)
 */
 MegaInt::MegaInt(std::string const &num)
 {
-	MegaInt();
-	Insert(num);
-	this->Normalize();
+    MegaInt();
+    Insert(num);
+    this->Normalize();
 }
 
 /*
@@ -39,23 +39,23 @@ MegaInt::MegaInt(std::string const &num)
 */
 void MegaInt::Insert(std::string const &new_number)
 {
-	int start = 0;
-	m_magnitude.clear();
+    int start = 0;
+    m_magnitude.clear();
 
-	if (new_number[0] == '+' || new_number[0] == '-')
-	{
-		m_sign = new_number[0];
-		start = 1;
-	}
-	else
-	{
-		m_sign = '+';
-	}
+    if (new_number[0] == '+' || new_number[0] == '-')
+    {
+        m_sign = new_number[0];
+        start = 1;
+    }
+    else
+    {
+        m_sign = '+';
+    }
 
-	for (size_t i = start; i < new_number.length(); i++)
-	{
-		m_magnitude.push_back(new_number[i]);
-	}
+    for (size_t i = start; i < new_number.length(); i++)
+    {
+        m_magnitude.push_back(new_number[i]);
+    }
 }
 
 /*
@@ -63,9 +63,9 @@ void MegaInt::Insert(std::string const &new_number)
 */
 void MegaInt::Clear()
 {
-	m_sign = '+';
-	m_magnitude.clear();
-	m_magnitude.push_back('0');
+    m_sign = '+';
+    m_magnitude.clear();
+    m_magnitude.push_back('0');
 }
 
 /*
@@ -74,28 +74,28 @@ void MegaInt::Clear()
 */
 void MegaInt::Normalize()
 {
-	if (m_magnitude.size() > 1)
-	{
-		for (std::deque<char>::iterator iter = m_magnitude.begin(); iter != m_magnitude.end() - 1;)
-		{
-			if (*iter == '0')
-			{
-				iter = m_magnitude.erase(iter);
-			}
-			else
-			{
-				break;
-			}
-		}
-	}
+    if (m_magnitude.size() > 1)
+    {
+        for (std::deque<char>::iterator iter = m_magnitude.begin(); iter != m_magnitude.end() - 1;)
+        {
+            if (*iter == '0')
+            {
+                iter = m_magnitude.erase(iter);
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
 
-	if (m_magnitude.size() == 1 && m_sign == '-')
-	{
-		if (m_magnitude[0] == '0')
-		{
-			m_sign = '+';
-		}
-	}
+    if (m_magnitude.size() == 1 && m_sign == '-')
+    {
+        if (m_magnitude[0] == '0')
+        {
+            m_sign = '+';
+        }
+    }
 }
 
 /*
@@ -103,14 +103,14 @@ void MegaInt::Normalize()
 */
 void MegaInt::Negate()
 {
-	if (m_sign == '+')
-	{
-		m_sign = '-';
-	}
-	else
-	{
-		m_sign = '+';
-	}
+    if (m_sign == '+')
+    {
+        m_sign = '-';
+    }
+    else
+    {
+        m_sign = '+';
+    }
 }
 
 /*
@@ -122,48 +122,48 @@ void MegaInt::Negate()
 */
 MegaInt MegaInt::Add(MegaInt B) const
 {
-	char sign_A = m_sign;
-	char sign_B = B.GetSign();
-	char sign_C;
+    char sign_A = m_sign;
+    char sign_B = B.GetSign();
+    char sign_C;
 
-	std::deque<char> mag_A = m_magnitude;
-	std::deque<char> mag_B = B.GetMagnitude();
-	std::deque<char> mag_C;
+    std::deque<char> mag_A = m_magnitude;
+    std::deque<char> mag_B = B.GetMagnitude();
+    std::deque<char> mag_C;
 
-	if (sign_A == sign_B)
-	{
-		sign_C = sign_A;
-		mag_C = Plus(mag_A, mag_B);
-	}
-	else
-	{
-		if (GreaterThan(mag_A, mag_B))
-		{
-			sign_C = sign_A;
-			mag_C = Minus(mag_A, mag_B);
-		}
-		else if (LesserThan(mag_A, mag_B))
-		{
-			if (sign_A == '+')
-			{
-				sign_C = '-';
-			}
-			else
-			{
-				sign_C = '+';
-			}
-			mag_C = Minus(mag_B, mag_A);
-		}
-		else
-		{
-			sign_C = '+';
-			mag_C.push_front('0');
-		}
-	}
+    if (sign_A == sign_B)
+    {
+        sign_C = sign_A;
+        mag_C = Plus(mag_A, mag_B);
+    }
+    else
+    {
+        if (GreaterThan(mag_A, mag_B))
+        {
+            sign_C = sign_A;
+            mag_C = Minus(mag_A, mag_B);
+        }
+        else if (LesserThan(mag_A, mag_B))
+        {
+            if (sign_A == '+')
+            {
+                sign_C = '-';
+            }
+            else
+            {
+                sign_C = '+';
+            }
+            mag_C = Minus(mag_B, mag_A);
+        }
+        else
+        {
+            sign_C = '+';
+            mag_C.push_front('0');
+        }
+    }
 
-	MegaInt C{sign_C, mag_C};
-	C.Normalize();
-	return C;
+    MegaInt C{sign_C, mag_C};
+    C.Normalize();
+    return C;
 }
 
 /*
@@ -175,49 +175,49 @@ MegaInt MegaInt::Add(MegaInt B) const
 */
 MegaInt MegaInt::Subtract(MegaInt B) const
 {
-	char sign_A = m_sign;
-	char sign_B = B.GetSign();
-	char sign_C;
+    char sign_A = m_sign;
+    char sign_B = B.GetSign();
+    char sign_C;
 
-	std::deque<char> mag_A = m_magnitude;
-	std::deque<char> mag_B = B.GetMagnitude();
-	std::deque<char> mag_C;
+    std::deque<char> mag_A = m_magnitude;
+    std::deque<char> mag_B = B.GetMagnitude();
+    std::deque<char> mag_C;
 
-	if (sign_A != sign_B)
-	{
-		sign_C = sign_A;
-		mag_C = Plus(mag_A, mag_B);
-	}
-	else
-	{
-		if (GreaterThan(mag_A, mag_B))
-		{
-			sign_C = sign_A;
-			mag_C = Minus(mag_A, mag_B);
-		}
-		else if (LesserThan(mag_A, mag_B))
-		{
-			if (sign_A == '+')
-			{
-				sign_C = '-';
-			}
-			else
-			{
-				sign_C = '+';
-			}
+    if (sign_A != sign_B)
+    {
+        sign_C = sign_A;
+        mag_C = Plus(mag_A, mag_B);
+    }
+    else
+    {
+        if (GreaterThan(mag_A, mag_B))
+        {
+            sign_C = sign_A;
+            mag_C = Minus(mag_A, mag_B);
+        }
+        else if (LesserThan(mag_A, mag_B))
+        {
+            if (sign_A == '+')
+            {
+                sign_C = '-';
+            }
+            else
+            {
+                sign_C = '+';
+            }
 
-			mag_C = Minus(mag_B, mag_A);
-		}
-		else
-		{
-			sign_C = '+';
-			mag_C.push_front('0');
-		}
-	}
+            mag_C = Minus(mag_B, mag_A);
+        }
+        else
+        {
+            sign_C = '+';
+            mag_C.push_front('0');
+        }
+    }
 
-	MegaInt C{sign_C, mag_C};
-	C.Normalize();
-	return C;
+    MegaInt C{sign_C, mag_C};
+    C.Normalize();
+    return C;
 }
 
 /*
@@ -229,36 +229,36 @@ MegaInt MegaInt::Subtract(MegaInt B) const
 */
 MegaInt MegaInt::Multiply(MegaInt B) const
 {
-	// product(multiplier, multiplicand)
-	char const sign_A = m_sign;
-	char const sign_B = B.GetSign();
-	char sign_C;
+    // product(multiplier, multiplicand)
+    char const sign_A = m_sign;
+    char const sign_B = B.GetSign();
+    char sign_C;
 
-	std::deque<char> mag_A = m_magnitude;
-	std::deque<char> mag_B = B.GetMagnitude();
-	std::deque<char> mag_C;
+    std::deque<char> mag_A = m_magnitude;
+    std::deque<char> mag_B = B.GetMagnitude();
+    std::deque<char> mag_C;
 
-	if (GreaterThan(mag_A, mag_B))
-	{
-		mag_C = Product2(mag_B, mag_A);
-	}
-	else
-	{
-		mag_C = Product2(mag_A, mag_B);
-	}
+    if (GreaterThan(mag_A, mag_B))
+    {
+        mag_C = Product2(mag_B, mag_A);
+    }
+    else
+    {
+        mag_C = Product2(mag_A, mag_B);
+    }
 
-	if (sign_A == sign_B)
-	{
-		sign_C = '+';
-	}
-	else
-	{
-		sign_C = '-';
-	}
+    if (sign_A == sign_B)
+    {
+        sign_C = '+';
+    }
+    else
+    {
+        sign_C = '-';
+    }
 
-	MegaInt C{sign_C, mag_C};
-	C.Normalize();
-	return C;
+    MegaInt C{sign_C, mag_C};
+    C.Normalize();
+    return C;
 }
 
 /*
@@ -270,31 +270,31 @@ MegaInt MegaInt::Multiply(MegaInt B) const
 */
 MegaInt MegaInt::Division(MegaInt B) const
 {
-	// quotient(dividend, divisor)
-	// quotient(A, B)
-	char const sign_A = m_sign;
-	char const sign_B = B.GetSign();
-	char sign_C;
+    // quotient(dividend, divisor)
+    // quotient(A, B)
+    char const sign_A = m_sign;
+    char const sign_B = B.GetSign();
+    char sign_C;
 
-	std::deque<char> mag_A = m_magnitude;
-	std::deque<char> mag_B = B.GetMagnitude();
-	std::deque<char> mag_C;
+    std::deque<char> mag_A = m_magnitude;
+    std::deque<char> mag_B = B.GetMagnitude();
+    std::deque<char> mag_C;
 
-	if (sign_A == sign_B)
-	{
-		sign_C = '+';
-	}
-	else
-	{
-		sign_C = '-';
-	}
+    if (sign_A == sign_B)
+    {
+        sign_C = '+';
+    }
+    else
+    {
+        sign_C = '-';
+    }
 
-	DivisionResult result = Quotient2(mag_A, mag_B);
-	mag_C = result.quotient;
+    DivisionResult result = Quotient2(mag_A, mag_B);
+    mag_C = result.quotient;
 
-	MegaInt C{sign_C, mag_C};
-	C.Normalize();
-	return C;
+    MegaInt C{sign_C, mag_C};
+    C.Normalize();
+    return C;
 }
 
 /*
@@ -306,31 +306,31 @@ MegaInt MegaInt::Division(MegaInt B) const
 */
 MegaInt MegaInt::Modulus(MegaInt B) const
 {
-	// quotient(dividend, divisor)
-	// quotient(A, B)
-	char const sign_A = m_sign;
-	char const sign_B = B.GetSign();
-	char sign_C;
+    // quotient(dividend, divisor)
+    // quotient(A, B)
+    char const sign_A = m_sign;
+    char const sign_B = B.GetSign();
+    char sign_C;
 
-	std::deque<char> mag_A = m_magnitude;
-	std::deque<char> mag_B = B.GetMagnitude();
-	std::deque<char> mag_C;
+    std::deque<char> mag_A = m_magnitude;
+    std::deque<char> mag_B = B.GetMagnitude();
+    std::deque<char> mag_C;
 
-	if (sign_A == sign_B)
-	{
-		sign_C = '+';
-	}
-	else
-	{
-		sign_C = '-';
-	}
+    if (sign_A == sign_B)
+    {
+        sign_C = '+';
+    }
+    else
+    {
+        sign_C = '-';
+    }
 
-	DivisionResult result = Quotient2(mag_A, mag_B);
-	mag_C = result.remainder;
+    DivisionResult result = Quotient2(mag_A, mag_B);
+    mag_C = result.remainder;
 
-	MegaInt C{sign_C, mag_C};
-	C.Normalize();
-	return C;
+    MegaInt C{sign_C, mag_C};
+    C.Normalize();
+    return C;
 }
 
 /*
@@ -342,8 +342,8 @@ MegaInt MegaInt::Modulus(MegaInt B) const
 */
 MegaInt &MegaInt::operator+=(const MegaInt &n)
 {
-	*this = *this + n;
-	return *this;
+    *this = *this + n;
+    return *this;
 }
 
 /*
@@ -355,8 +355,8 @@ MegaInt &MegaInt::operator+=(const MegaInt &n)
 */
 MegaInt &MegaInt::operator-=(const MegaInt &n)
 {
-	*this = *this - n;
-	return *this;
+    *this = *this - n;
+    return *this;
 }
 
 /*
@@ -368,8 +368,8 @@ MegaInt &MegaInt::operator-=(const MegaInt &n)
 */
 MegaInt &MegaInt::operator*=(const MegaInt &n)
 {
-	*this = (*this) * n;
-	return *this;
+    *this = (*this) * n;
+    return *this;
 }
 
 /*
@@ -381,8 +381,8 @@ MegaInt &MegaInt::operator*=(const MegaInt &n)
 */
 MegaInt &MegaInt::operator/=(const MegaInt &n)
 {
-	*this = (*this) / n;
-	return *this;
+    *this = (*this) / n;
+    return *this;
 }
 
 /*
@@ -394,8 +394,8 @@ MegaInt &MegaInt::operator/=(const MegaInt &n)
 */
 MegaInt &MegaInt::operator%=(const MegaInt &n)
 {
-	*this = (*this) % n;
-	return *this;
+    *this = (*this) % n;
+    return *this;
 }
 
 /*
@@ -405,10 +405,10 @@ MegaInt &MegaInt::operator%=(const MegaInt &n)
 */
 MegaInt &MegaInt::operator++()
 {
-	// prefix
-	MegaInt one{"+1"};
-	(*this) += one;
-	return *this;
+    // prefix
+    MegaInt one{"+1"};
+    (*this) += one;
+    return *this;
 }
 
 /*
@@ -418,11 +418,11 @@ MegaInt &MegaInt::operator++()
 */
 MegaInt MegaInt::operator++(int)
 {
-	// postfix
-	MegaInt temp;
-	temp = *this;
-	++(*this);
-	return temp;
+    // postfix
+    MegaInt temp;
+    temp = *this;
+    ++(*this);
+    return temp;
 }
 
 /*
@@ -432,10 +432,10 @@ MegaInt MegaInt::operator++(int)
 */
 MegaInt &MegaInt::operator--()
 {
-	// prefix
-	MegaInt one{"+1"};
-	(*this) -= one;
-	return *this;
+    // prefix
+    MegaInt one{"+1"};
+    (*this) -= one;
+    return *this;
 }
 
 /*
@@ -445,11 +445,11 @@ MegaInt &MegaInt::operator--()
 */
 MegaInt MegaInt::operator--(int)
 {
-	// postfix
-	MegaInt temp;
-	temp = *this;
-	--(*this);
-	return temp;
+    // postfix
+    MegaInt temp;
+    temp = *this;
+    --(*this);
+    return temp;
 }
 
 /*
@@ -461,18 +461,18 @@ MegaInt MegaInt::operator--(int)
 */
 char MegaInt::operator[](const int index)
 {
-	// chk if index is in right range
-	if (index >= 0 && static_cast<size_t>(index) < m_magnitude.size())
-	{
-		return m_magnitude[index];
-	}
-	else
-	{
-		char temp{'0'};
-		std::cout << "out of bound index entered" << std::endl;
+    // chk if index is in right range
+    if (index >= 0 && static_cast<size_t>(index) < m_magnitude.size())
+    {
+        return m_magnitude[index];
+    }
+    else
+    {
+        char temp{'0'};
+        std::cout << "out of bound index entered \n";
 
-		return temp;
-	}
+        return temp;
+    }
 }
 
 /*
@@ -482,7 +482,7 @@ char MegaInt::operator[](const int index)
 */
 char MegaInt::GetSign() const
 {
-	return m_sign;
+    return m_sign;
 }
 
 /*
@@ -492,7 +492,7 @@ char MegaInt::GetSign() const
 */
 std::deque<char> MegaInt::GetMagnitude() const
 {
-	return m_magnitude;
+    return m_magnitude;
 }
 
 /*
@@ -505,10 +505,10 @@ std::deque<char> MegaInt::GetMagnitude() const
 */
 MegaInt operator+(const MegaInt &m, const MegaInt &n)
 {
-	MegaInt temp;
-	temp = m.Add(n);
+    MegaInt temp;
+    temp = m.Add(n);
 
-	return temp;
+    return temp;
 }
 
 /*
@@ -521,10 +521,10 @@ MegaInt operator+(const MegaInt &m, const MegaInt &n)
 */
 MegaInt operator-(const MegaInt &m, const MegaInt &n)
 {
-	MegaInt temp;
-	temp = m.Subtract(n);
+    MegaInt temp;
+    temp = m.Subtract(n);
 
-	return temp;
+    return temp;
 }
 
 /*
@@ -537,10 +537,10 @@ MegaInt operator-(const MegaInt &m, const MegaInt &n)
 */
 MegaInt operator*(const MegaInt &m, const MegaInt &n)
 {
-	MegaInt temp;
-	temp = m.Multiply(n);
+    MegaInt temp;
+    temp = m.Multiply(n);
 
-	return temp;
+    return temp;
 }
 
 /*
@@ -553,10 +553,10 @@ MegaInt operator*(const MegaInt &m, const MegaInt &n)
 */
 MegaInt operator/(const MegaInt &m, const MegaInt &n)
 {
-	MegaInt temp;
-	temp = m.Division(n);
+    MegaInt temp;
+    temp = m.Division(n);
 
-	return temp;
+    return temp;
 }
 
 /*
@@ -569,10 +569,10 @@ MegaInt operator/(const MegaInt &m, const MegaInt &n)
 */
 MegaInt operator%(const MegaInt &m, const MegaInt &n)
 {
-	MegaInt temp;
-	temp = m.Modulus(n);
+    MegaInt temp;
+    temp = m.Modulus(n);
 
-	return temp;
+    return temp;
 }
 
 /*
@@ -586,17 +586,17 @@ MegaInt operator%(const MegaInt &m, const MegaInt &n)
 */
 std::ostream &operator<<(std::ostream &out, const MegaInt &m)
 {
-	const char copySign = m.GetSign();
-	std::deque<char> copyMagnitude = m.GetMagnitude();
+    const char copySign = m.GetSign();
+    std::deque<char> copyMagnitude = m.GetMagnitude();
 
-	out << copySign;
+    out << copySign;
 
-	for (auto iter = copyMagnitude.begin(); iter != copyMagnitude.end(); iter++)
-	{
-		out << *iter;
-	}
+    for (auto iter = copyMagnitude.begin(); iter != copyMagnitude.end(); iter++)
+    {
+        out << *iter;
+    }
 
-	return out;
+    return out;
 }
 
 /*
@@ -610,26 +610,26 @@ std::ostream &operator<<(std::ostream &out, const MegaInt &m)
 */
 bool operator>(const MegaInt &m, const MegaInt &n)
 {
-	if (m.GetSign() == '+' && n.GetSign() == '+')
-	{
-		return GreaterThan(m.GetMagnitude(), n.GetMagnitude());
-	}
-	else if (m.GetSign() == '+' && n.GetSign() == '-')
-	{
-		return true;
-	}
-	else if (m.GetSign() == '-' && n.GetSign() == '+')
-	{
-		return false;
-	}
-	else if (m.GetSign() == '-' && n.GetSign() == '-')
-	{
-		return GreaterThan(n.GetMagnitude(), m.GetMagnitude());
-	}
-	else
-	{
-		return false;
-	}
+    if (m.GetSign() == '+' && n.GetSign() == '+')
+    {
+        return GreaterThan(m.GetMagnitude(), n.GetMagnitude());
+    }
+    else if (m.GetSign() == '+' && n.GetSign() == '-')
+    {
+        return true;
+    }
+    else if (m.GetSign() == '-' && n.GetSign() == '+')
+    {
+        return false;
+    }
+    else if (m.GetSign() == '-' && n.GetSign() == '-')
+    {
+        return GreaterThan(n.GetMagnitude(), m.GetMagnitude());
+    }
+    else
+    {
+        return false;
+    }
 }
 
 /*
@@ -643,26 +643,26 @@ bool operator>(const MegaInt &m, const MegaInt &n)
 */
 bool operator<(const MegaInt &m, const MegaInt &n)
 {
-	if (m.GetSign() == '+' && n.GetSign() == '+')
-	{
-		return LesserThan(m.GetMagnitude(), n.GetMagnitude());
-	}
-	else if (m.GetSign() == '+' && n.GetSign() == '-')
-	{
-		return false;
-	}
-	else if (m.GetSign() == '-' && n.GetSign() == '+')
-	{
-		return true;
-	}
-	else if (m.GetSign() == '-' && n.GetSign() == '-')
-	{
-		return LesserThan(n.GetMagnitude(), m.GetMagnitude());
-	}
-	else
-	{
-		return false;
-	}
+    if (m.GetSign() == '+' && n.GetSign() == '+')
+    {
+        return LesserThan(m.GetMagnitude(), n.GetMagnitude());
+    }
+    else if (m.GetSign() == '+' && n.GetSign() == '-')
+    {
+        return false;
+    }
+    else if (m.GetSign() == '-' && n.GetSign() == '+')
+    {
+        return true;
+    }
+    else if (m.GetSign() == '-' && n.GetSign() == '-')
+    {
+        return LesserThan(n.GetMagnitude(), m.GetMagnitude());
+    }
+    else
+    {
+        return false;
+    }
 }
 
 /*
@@ -676,26 +676,26 @@ bool operator<(const MegaInt &m, const MegaInt &n)
 */
 bool operator==(const MegaInt &m, const MegaInt &n)
 {
-	if (m.GetSign() == '+' && n.GetSign() == '+')
-	{
-		return EqualTo(m.GetMagnitude(), n.GetMagnitude());
-	}
-	else if (m.GetSign() == '+' && n.GetSign() == '-')
-	{
-		return false;
-	}
-	else if (m.GetSign() == '-' && n.GetSign() == '+')
-	{
-		return false;
-	}
-	else if (m.GetSign() == '-' && n.GetSign() == '-')
-	{
-		return EqualTo(m.GetMagnitude(), n.GetMagnitude());
-	}
-	else
-	{
-		return false;
-	}
+    if (m.GetSign() == '+' && n.GetSign() == '+')
+    {
+        return EqualTo(m.GetMagnitude(), n.GetMagnitude());
+    }
+    else if (m.GetSign() == '+' && n.GetSign() == '-')
+    {
+        return false;
+    }
+    else if (m.GetSign() == '-' && n.GetSign() == '+')
+    {
+        return false;
+    }
+    else if (m.GetSign() == '-' && n.GetSign() == '-')
+    {
+        return EqualTo(m.GetMagnitude(), n.GetMagnitude());
+    }
+    else
+    {
+        return false;
+    }
 }
 
 /*
@@ -709,7 +709,7 @@ bool operator==(const MegaInt &m, const MegaInt &n)
 */
 bool operator<=(const MegaInt &m, const MegaInt &n)
 {
-	return !(m > n);
+    return !(m > n);
 }
 
 /*
@@ -723,7 +723,7 @@ bool operator<=(const MegaInt &m, const MegaInt &n)
 */
 bool operator>=(const MegaInt &m, const MegaInt &n)
 {
-	return !(m < n);
+    return !(m < n);
 }
 
 /*
@@ -737,5 +737,5 @@ bool operator>=(const MegaInt &m, const MegaInt &n)
 */
 bool operator!=(const MegaInt &m, const MegaInt &n)
 {
-	return !(m == n);
+    return !(m == n);
 }

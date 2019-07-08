@@ -20,13 +20,13 @@ void MegaCalc::Run()
 	std::string command_line;
 	MegaInt accumulator;
 
-	std::cout << "Welcome to MegaCalculator" << std::endl;
-	std::cout << "-------------------------" << std::endl;
+	std::cout << "Welcome to MegaCalculator\n";
+	std::cout << "-------------------------\n";
 
 	do
 	{
-		std::cout << std::endl;
-		std::cout << "Accumulator: " << accumulator << std::endl;
+		std::cout << "\n";
+		std::cout << "Accumulator: " << accumulator << "\n";
 		std::cout << "Enter input: ";
 
 		std::getline(std::cin, command_line);
@@ -34,7 +34,7 @@ void MegaCalc::Run()
 
 		if (m_error)
 		{
-			std::cout << "Invalid Input" << std::endl;
+			std::cout << "Invalid Input\n";
 		}
 	} while (!m_quit);
 }
@@ -172,7 +172,7 @@ void MegaCalc::Factorial(MegaInt &num)
 		MegaInt zero{"+0"};
 		if (num == zero)
 		{
-			std::cout << "+1! = +1" << std::endl;
+			std::cout << "+1! = +1\n";
 			return;
 		}
 		else if (num < zero)
@@ -187,7 +187,7 @@ void MegaCalc::Factorial(MegaInt &num)
 	for (MegaInt i{"+1"}; i <= num; i++)
 	{
 		fact *= i;
-		std::cout << i << "! = " << fact << std::endl;
+		std::cout << i << "! = " << fact << "\n";
 	}
 }
 
@@ -202,7 +202,7 @@ void MegaCalc::Hailstone(MegaInt &num)
 
 	if (num == zero)
 	{
-		std::cout << "+1! = +1" << std::endl;
+		std::cout << "+1! = +1\n";
 		return;
 	}
 	else if (num < zero)
@@ -219,7 +219,7 @@ void MegaCalc::Hailstone(MegaInt &num)
 
 	while (temp != one)
 	{
-		std::cout << "> " << temp << std::endl;
+		std::cout << "> " << temp << "\n";
 
 		if (temp % two == zero)
 		{
@@ -231,8 +231,8 @@ void MegaCalc::Hailstone(MegaInt &num)
 		}
 		steps++;
 	}
-	std::cout << "> " << temp << std::endl;
-	std::cout << "length of the hailstone (" << num << ") sequence: " << steps << std::endl;
+	std::cout << "> " << temp << "\n";
+	std::cout << "length of the hailstone (" << num << ") sequence: " << steps << "\n";
 }
 
 /*
